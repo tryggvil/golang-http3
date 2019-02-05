@@ -1,0 +1,146 @@
+Step: build-step-credential-initializer:
+
+{"level":"warn","ts":1549367957.5581987,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1549367957.5595424,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: build-step-git-source-0:
+
+{"level":"warn","ts":1549367960.561457,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1549367961.6286337,"logger":"fallback-logger","caller":"git-init/main.go:92","msg":"Successfully cloned \"https://github.com/tryggvil/golang-http3.git\" @ \"master\" in path \"/workspace\""}
+Step: build-step-jenkins:
+
+Picked up _JAVA_OPTIONS: -Xmx400m
+Started
+Running in Durability level: PERFORMANCE_OPTIMIZED
+  24.411 [id=25]	WARNING	i.f.k.c.i.VersionUsageUtils#alert: The client is using resource type 'customresourcedefinitions' with unstable version 'v1beta1'
+[Pipeline] node
+Running on Jenkins in /tmp/jenkinsTests.tmp/jenkins5337266456751799664test/workspace/job
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withCredentials
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (CI Build and push snapshot)
+Stage "CI Build and push snapshot" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Release)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/tryggvil/golang-http3
+[Pipeline] {
+[Pipeline] git
+Cloning the remote Git repository
+Cloning repository https://github.com/tryggvil/golang-http3.git
+ > git init /home/jenkins/go/src/github.com/tryggvil/golang-http3 # timeout=10
+Fetching upstream changes from https://github.com/tryggvil/golang-http3.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/tryggvil/golang-http3.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/tryggvil/golang-http3.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/tryggvil/golang-http3.git # timeout=10
+Fetching upstream changes from https://github.com/tryggvil/golang-http3.git
+ > git fetch --tags --progress https://github.com/tryggvil/golang-http3.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision dbd9e69f865ec42477536e7a625b29e07142441b (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f dbd9e69f865ec42477536e7a625b29e07142441b
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master dbd9e69f865ec42477536e7a625b29e07142441b
+Commit message: "Draft create"
+First time build. Skipping changelog.
+[Pipeline] sh
++ jx-release-version
++ echo 0.0.1
+[Pipeline] sh
++ cat VERSION
++ jx step tag --version 0.0.1
+Tag v0.0.1 created and pushed to remote origin
+[Pipeline] sh
++ make build
+CGO_ENABLED=0 GO15VENDOREXPERIMENT=1 go build -ldflags '' -o bin/golang-http3 main.go
+[Pipeline] sh
++ cat VERSION
++ export VERSION=0.0.1
++ skaffold build -f skaffold.yaml
+time="2019-02-05T12:01:53Z" level=warning msg="config version (skaffold/v1beta2) out of date: upgrading to latest (skaffold/v1beta3)"
+Starting build...
+Building [changeme]...
+Sending build context to Docker daemon  525.8kBSending build context to Docker daemon  6.502MB
+Step 1/4 : FROM scratch
+ ---> 
+Step 2/4 : EXPOSE 8080
+ ---> Using cache
+ ---> e943148aa1b0
+Step 3/4 : ENTRYPOINT /golang-http3
+ ---> Using cache
+ ---> 00da5d0748d2
+Step 4/4 : COPY ./bin/ /
+ ---> 4c0e6f736e5c
+Successfully built 4c0e6f736e5c
+The push refers to a repository [413249463454.dkr.ecr.us-west-2.amazonaws.com/tryggvil/golang-http3]
+040436d24601: Preparing
+040436d24601: Pushed
+0.0.1: digest: sha256:b7f0cc0acd7408775f9f87a916941e6632828db3adee1818e70f9e02f22ed043 size: 528
+Build complete in 10.987016212s
+Starting test...
+Test complete in 5.498µs
+changeme -> 413249463454.dkr.ecr.us-west-2.amazonaws.com/tryggvil/golang-http3:0.0.1
+There is a new version (0.22.0) of skaffold available. Download it at https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+
+[Pipeline] sh
++ cat VERSION
++ jx step post build --image 413249463454.dkr.ecr.us-west-2.amazonaws.com/tryggvil/golang-http3:0.0.1
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Promote to Environments)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/tryggvil/golang-http3/charts/golang-http3
+[Pipeline] {
+[Pipeline] sh
++ cat ../../VERSION
++ jx step changelog --version v0.0.1
+Using batch mode as inside a pipeline
+Generating change log from git ref dbd9e69f865ec42477536e7a625b29e07142441b => c5954c4e6404b1fb08589255757d31b357025cdc
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Finding issues in commit messages using git format
+No release found for tryggvil/golang-http3 and tag v0.0.1 so creating a new release
+Updated the release information at https://github.com/tryggvil/golang-http3/releases/tag/v0.0.1
+generated: /home/jenkins/go/src/github.com/tryggvil/golang-http3/charts/golang-http3/templates/release.yaml
+Created Release golang-http3-0-0-1 resource in namespace jx
+Updating PipelineActivity tryggvil-golang-http3-master-1 with version 0.0.1
+Updated PipelineActivities tryggvil-golang-http3-master-1 with release notes URL: https://github.com/tryggvil/golang-http3/releases/tag/v0.0.1
+[Pipeline] sh
++ jx step helm release
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Adding missing Helm repo: jenkins-x http://chartmuseum.jenkins-x.io
+Successfully added Helm repository jenkins-x.
+Adding missing Helm repo: releases http://jenkins-x-chartmuseum:8080
+Successfully added Helm repository releases.
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Uploading chart file golang-http3-0.0.1.tgz to http://jenkins-x-chartmuseum:8080/api/charts
+Received 401 response: {"error":"unauthorized"}
+error: Failed to post chart to http://jenkins-x-chartmuseum:8080/api/charts due to response 401: {"error":"unauthorized"}
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+Finished: FAILURE
